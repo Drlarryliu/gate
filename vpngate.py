@@ -95,7 +95,7 @@ EDGE_HOSTS = [
 # 优选 API 地址配置 (支持逗号分隔多个，可配置在 GitHub Action Secret / Env 中)
 OPTIMAL_API = os.environ.get("OPTIMAL_API", "https://cf.090227.xyz/ct?ips=6&port=443")
 
-NODES_URL = os.environ.get("NODES_URL", "https://YOUR_GITHUB_USERNAME.github.io/gate/nodes.txt")
+NODES_URL = os.environ.get("NODES_URL", "https://Drlarryliu.github.io/gate/nodes.txt")
 
 # ---------------------------------------------------------------------------
 # 日志
@@ -385,11 +385,11 @@ def build_outputs(results, raw_count, sstp_count, source):
     countries = {}
     for n in available:
         c = n["country"] or "未知"
-        countries.setdefault(c, {"code": n["country_code"] or "?", "nodes": []})["nodes"].append(n)
+        countries.setdefault(c, {"code": n["country_code"] or "?", "": []})[""].append(n)
 
     stats = {
-        "raw_nodes": raw_count,
-        "sstp_nodes": sstp_count,
+        "raw_": raw_count,
+        "sstp_": sstp_count,
         "checked": len(results),
         "success": len(available),
         "failed": len(results) - len(available),
@@ -399,9 +399,9 @@ def build_outputs(results, raw_count, sstp_count, source):
     }
     by_country = {}
     for name, grp in countries.items():
-        grp["count"] = len(grp["nodes"])
-        grp["residential"] = sum(1 for n in grp["nodes"] if n["residential"] == "residential")
-        grp["datacenter"] = sum(1 for n in grp["nodes"] if n["residential"] == "datacenter")
+        grp["count"] = len(grp[""])
+        grp["residential"] = sum(1 for n in grp[""] if n["residential"] == "residential")
+        grp["datacenter"] = sum(1 for n in grp[""] if n["residential"] == "datacenter")
         grp["nodes"].sort(key=lambda n: (n.get("latency_ms") is None, n.get("latency_ms") or 0, n["host"]))
         by_country[name] = grp
 
